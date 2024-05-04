@@ -1,5 +1,5 @@
 # LabBud
-A Offline Website to take measurements and calculate errors
+A Offline Website to take measurements and calculate errors, download and double-click index.html and you are good to go!
 
 Uses Math.js and MathJax, included in this repo for convenience
 

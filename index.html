@@ -71,19 +71,19 @@
       if (scope.hasOwnProperty(identi)) return;
       let header = `  <h3>${document.getElementById("neuerMessVarName").value}</h3>
                        
-                        <button onclick="loescheMesswertTabelle('${identi}')">Messreihe löschen</button>
+                        <button onclick="loescheMesswertTabelle('${identi}')">Delete Series</button>
                         <button onclick="neuerMesswertplatz('${identi}')">+</button>
                         <table id="${identi}">
                         <tr>
-                            <th>Wert Löschen</th>
-                            <th>Wert</th>
+                            <th>Delete</th>
+                            <th>Value</th>
                         </tr>
                        </table>
                        <button onclick="berechneErgMessreihe('${identi}')"><h3>CALCULATE</h3></button>
 					             <br>
                        <h3 style="display: inline;">Average:</h3> <div style="display:inline;" id="${identi + "MW"}"></div>
              
-                       <h3 style="display: inline;">Standard erro (Avg/sqrt(N-1))r:</h3> <div style="display:inline;" id="${identi + "SF"}"></div>
+                       <h3 style="display: inline;">Standard error (Avg/sqrt(N-1)):</h3> <div style="display:inline;" id="${identi + "SF"}"></div>
 					   `;
       let element = document.createElement('div')
       element.innerHTML = header.trim();
@@ -159,7 +159,7 @@
       cell3.innerHTML = `<input type="text">`;
       //We can't add it to the scope yet as the user only created the variable, but hasnt given it a value
       scope[name] = null;
-      scope[name+"ERR"] = null;
+      scope[name + "ERR"] = null;
     }
 
     //Delete known value
@@ -219,7 +219,7 @@
     //Calculate a function
     function berechneFunk(name) {
       let row = document.getElementById(name);
-      let term = math.simplify(math.parse(row.cells[2].firstChild.value));
+      let term = math.parse(row.cells[2].firstChild.value);
 
       let erg = term.evaluate(scope);
 
@@ -246,7 +246,7 @@
                                 <th>Value * Error of Var</th>
                             </tr>
                         </table>`;
-      
+
       //Create all derivatives
       let abltbl = document.getElementById(name + "ABLTBL");
       term.traverse(function (node, p, pa) {
@@ -293,57 +293,57 @@
 
   </script>
 
-  <div id="Messreihen">
-    <h2>Measurement Series</h2>
-    <label for="neuerMessVarName">Name:</label>
-    <input type="text" id="neuerMessVarName" name="neuerMessVarName">
-    <button onclick="neueMessreihe()">New measurement series</button>
+  <h2>Measurement Series</h2>
+  <label for="neuerMessVarName">Name:</label>
+  <input type="text" id="neuerMessVarName" name="neuerMessVarName">
+  <button onclick="neueMessreihe()">New measurement series</button>
 
-    <div id="Feste Werte">
-      <h2>Set Variables</h2>
-      <label for="neuerFestWertName">Name:</label>
-      <input type="text" id="neuerFestWertName" name="neuerFestWertName">
-      <button onclick="neuerFestwert()">New Var</button>
-      <button onclick="updateScope()">Update Scope</button>
-      <table id="FesteWerte">
-        <tbody>
-          <tr>
-            <th>Delete</th>
-            <th>Var Name</th>
-            <th>Var</th>
-            <th>Var Error</th>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div id="Funkts">
-      <h2>Funktionen</h2>
-      <label for="neueFunktion">Name:</label>
-      <input type="text" id="neueFunktion" name="neueFunktion">
-      <button onclick="neueFunktion()">Neue Funktion</button>
-      <table id="Funktionen">
-        <tbody>
-          <tr>
-            <th>Delete Function</th>
-            <th>Function Name</th>
-            <th>Function-Term</th>
-            <th>LaTex</th>
-            <th>Result</th>
-            <th>Error</th>
-            <th>Calculate</th>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div id="Abls">
-      <h3>Derrivatives</h3>
+  <div id="Feste Werte">
+    <h2>Set Variables</h2>
+    <label for="neuerFestWertName">Name:</label>
+    <input type="text" id="neuerFestWertName" name="neuerFestWertName">
+    <button onclick="neuerFestwert()">New Var</button>
+    <button onclick="updateScope()">Update Scope</button>
+    <table id="FesteWerte">
+      <tbody>
+        <tr>
+          <th>Delete</th>
+          <th>Var Name</th>
+          <th>Var</th>
+          <th>Var Error</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="Funkts">
+    <h2>Functions</h2>
+    <label for="neueFunktion">Name:</label>
+    <input type="text" id="neueFunktion" name="neueFunktion">
+    <button onclick="neueFunktion()">New Function</button>
+    <table id="Funktionen">
+      <tbody>
+        <tr>
+          <th>Delete Function</th>
+          <th>Function Name</th>
+          <th>Function-Term</th>
+          <th>LaTex</th>
+          <th>Result</th>
+          <th>Error</th>
+          <th>Calculate</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="Abls">
+    <h3>Derrivatives</h3>
 
-    </div>
-    <div>
-      <h2>Scope</h2>
-      <button onclick="scope = {}; showScope()">Clear Scope</button>
-      <div id="ScopePlatz">{}</div>
-    </div>
+  </div>
+  <div id="Messreihen"></div>
+  <div>
+    <h2>Scope</h2>
+    <button onclick="scope = {}; showScope()">Clear Scope</button>
+    <div id="ScopePlatz">{}</div>
+  </div>
 
 
 </body>
